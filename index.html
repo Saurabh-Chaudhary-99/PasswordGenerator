@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .btn-generate {
+            background-color: #007acc;
+            color: #fff;
+            border: none;
+        }
+
+        .btn-generate:hover {
+            background-color: #0056a7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Password Generator</h1>
+        <form>
+            <div class="form-group">
+                <label for="length">Password Length:</label>
+                <input type="number" class="form-control" id="length" min="4" max="20" value="12">
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="uppercase">
+                <label class="form-check-label" for="uppercase">Include Uppercase Letters</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="lowercase" checked>
+                <label class="form-check-label" for="lowercase">Include Lowercase Letters</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="numbers" checked>
+                <label class="form-check-label" for="numbers">Include Numbers</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="symbols">
+                <label class="form-check-label" for="symbols">Include Symbols</label>
+            </div>
+            <button type="button" class="btn btn-generate btn-block mt-3" id="generate">Generate Password</button>
+        </form>
+        <h2 class="mt-4">Your Password:</h2>
+        <textarea class="form-control" id="password" readonly></textarea>
+    </div>
+
+    <script>
+        function generatePassword() {
+            const length = parseInt(document.getElementById("length").value);
+            const includeUppercase = document.getElementById("uppercase").checked;
+            const includeLowercase = document.getElementById("lowercase").checked;
+            const includeNumbers = document.getElementById("numbers").checked;
+            const includeSymbols = document.getElementById("symbols").checked;
+
+            const uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const lowercaseChars = "abcdefghijklmnopqrstuvwxyz";
+            const numberChars = "0123456789";
+            const symbolChars = "!@#$%^&*()_+[]{}|;:,.<>?";
+
+            let validChars = "";
+            if (includeUppercase) validChars += uppercaseChars;
+            if (includeLowercase) validChars += lowercaseChars;
+            if (includeNumbers) validChars += numberChars;
+            if (includeSymbols) validChars += symbolChars;
+
+            let password = "";
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * validChars.length);
+                password += validChars[randomIndex];
+            }
+
+            document.getElementById("password").value = password;
+        }
+
+        document.getElementById("generate").addEventListener("click", generatePassword);
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
